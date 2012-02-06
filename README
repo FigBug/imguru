@@ -19,3 +19,4 @@ Depends on:
 imgur.com
 tinyxml
 curl
+NSImage+MGCropExtensions
