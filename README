@@ -1,0 +1,21 @@
+imguru v1.0.2 by Roland Rabien (figbug@gmail.com) Feb 6 2012.
+
+usage: imguru [-odpilmbdhv] [-s max_dimension] source_file ...
+Uploads one of more images to imgur.com. Supports all image formats supported by Mac OS X and will resize and convert to JPEG before uploading.
+
+-d  Display direct link to image (default)
+-p  Display link to image page
+-i  Display HTML image
+-l  Display HTMl link
+-m  Display message board image code
+-b  Display message board link code
+-r  Display delete link
+-o  Open uploaded images in browser
+-s  Resize image to have maximum dimension of max_dimension
+-h  Display help
+-v  Display version
+
+Depends on:
+imgur.com
+tinyxml
+curl
