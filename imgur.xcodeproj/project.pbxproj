@@ -1,0 +1,265 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7817C3B1109F271400B7DFFB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7817C3B0109F271400B7DFFB /* libcurl.dylib */; };
+		78A71146109F5FE600158DC0 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71140109F5FE600158DC0 /* tinystr.cpp */; };
+		78A71147109F5FE600158DC0 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71142109F5FE600158DC0 /* tinyxml.cpp */; };
+		78A71148109F5FE600158DC0 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71144109F5FE600158DC0 /* tinyxmlerror.cpp */; };
+		78A71149109F5FE600158DC0 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71145109F5FE600158DC0 /* tinyxmlparser.cpp */; };
+		78A71197109F9CDE00158DC0 /* ImgProc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78A71196109F9CDE00158DC0 /* ImgProc.mm */; };
+		78A711A3109F9D9300158DC0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A711A2109F9D9300158DC0 /* Foundation.framework */; };
+		78A7122B109F9E9B00158DC0 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A7122A109F9E9B00158DC0 /* AppKit.framework */; };
+		78A71326109FA3F000158DC0 /* NSImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A71325109FA3F000158DC0 /* NSImageAdditions.m */; };
+		8DD76F650486A84900D96B5E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.cpp */; settings = {ATTRIBUTES = (); }; };
+		8DD76F6A0486A84900D96B5E /* imgur.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* imgur.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				8DD76F6A0486A84900D96B5E /* imgur.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		08FB7796FE84155DC02AAC07 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		7817C3B0109F271400B7DFFB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
+		78A71140109F5FE600158DC0 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = tinyxml/tinystr.cpp; sourceTree = "<group>"; };
+		78A71141109F5FE600158DC0 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = tinyxml/tinystr.h; sourceTree = "<group>"; };
+		78A71142109F5FE600158DC0 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml.cpp; path = tinyxml/tinyxml.cpp; sourceTree = "<group>"; };
+		78A71143109F5FE600158DC0 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinyxml.h; path = tinyxml/tinyxml.h; sourceTree = "<group>"; };
+		78A71144109F5FE600158DC0 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = tinyxml/tinyxmlerror.cpp; sourceTree = "<group>"; };
+		78A71145109F5FE600158DC0 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = tinyxml/tinyxmlparser.cpp; sourceTree = "<group>"; };
+		78A71196109F9CDE00158DC0 /* ImgProc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImgProc.mm; sourceTree = "<group>"; };
+		78A711A2109F9D9300158DC0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		78A7122A109F9E9B00158DC0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		78A71324109FA3F000158DC0 /* NSImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSImageAdditions.h; sourceTree = "<group>"; };
+		78A71325109FA3F000158DC0 /* NSImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSImageAdditions.m; sourceTree = "<group>"; };
+		8DD76F6C0486A84900D96B5E /* imguru */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = imguru; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6859E8B029090EE04C91782 /* imgur.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = imgur.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7817C3B1109F271400B7DFFB /* libcurl.dylib in Frameworks */,
+				78A711A3109F9D9300158DC0 /* Foundation.framework in Frameworks */,
+				78A7122B109F9E9B00158DC0 /* AppKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* imgur */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6859E8C029090F304C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+				7817C3B0109F271400B7DFFB /* libcurl.dylib */,
+				78A7122A109F9E9B00158DC0 /* AppKit.framework */,
+				78A711A2109F9D9300158DC0 /* Foundation.framework */,
+			);
+			name = imgur;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				78A7113F109F5FCF00158DC0 /* TinyXml */,
+				08FB7796FE84155DC02AAC07 /* main.cpp */,
+				78A71196109F9CDE00158DC0 /* ImgProc.mm */,
+				78A71324109FA3F000158DC0 /* NSImageAdditions.h */,
+				78A71325109FA3F000158DC0 /* NSImageAdditions.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76F6C0486A84900D96B5E /* imguru */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		78A7113F109F5FCF00158DC0 /* TinyXml */ = {
+			isa = PBXGroup;
+			children = (
+				78A71140109F5FE600158DC0 /* tinystr.cpp */,
+				78A71141109F5FE600158DC0 /* tinystr.h */,
+				78A71142109F5FE600158DC0 /* tinyxml.cpp */,
+				78A71143109F5FE600158DC0 /* tinyxml.h */,
+				78A71144109F5FE600158DC0 /* tinyxmlerror.cpp */,
+				78A71145109F5FE600158DC0 /* tinyxmlparser.cpp */,
+			);
+			name = TinyXml;
+			sourceTree = "<group>";
+		};
+		C6859E8C029090F304C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				C6859E8B029090EE04C91782 /* imgur.1 */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76F620486A84900D96B5E /* imguru */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "imguru" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = imguru;
+			productInstallPath = "$(HOME)/bin";
+			productName = imgur;
+			productReference = 8DD76F6C0486A84900D96B5E /* imguru */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "imgur" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* imgur */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* imguru */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD76F650486A84900D96B5E /* main.cpp in Sources */,
+				78A71146109F5FE600158DC0 /* tinystr.cpp in Sources */,
+				78A71147109F5FE600158DC0 /* tinyxml.cpp in Sources */,
+				78A71148109F5FE600158DC0 /* tinyxmlerror.cpp in Sources */,
+				78A71149109F5FE600158DC0 /* tinyxmlparser.cpp in Sources */,
+				78A71197109F9CDE00158DC0 /* ImgProc.mm in Sources */,
+				78A71326109FA3F000158DC0 /* NSImageAdditions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_GLIBCXX_DEBUG=1",
+					"_GLIBCXX_DEBUG_PEDANTIC=1",
+				);
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = imgur;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = imguru;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "imguru" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "imgur" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
