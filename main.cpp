@@ -35,13 +35,13 @@ void init();
 
 bool usage()
 {
-	printf("usage: imguru [-odpilmbdhv] [-s max_dimension] source_file ...\n");
+	printf("usage: imguru [-odpilmbdrhv] [-s max_dimension] source_file ...\n");
 	return true;
 }
 
 bool showHelp()
 {
-	printf("usage: imguru [-odpilmbdhv] [-s max_dimension] source_file ...\n");
+	printf("usage: imguru [-odpilmbdrhv] [-s max_dimension] source_file ...\n");
 	printf("Uploads one of more images to imgur.com. Supports all image formats supported by Mac OS X and will resize and convert to JPEG before uploading.\n\n");
 	printf("-d  Display direct link to image (default)\n");
 	printf("-p  Display link to image page\n");
@@ -130,7 +130,7 @@ int parseCmdLine(int argc, char* const argv[])
 	opterr = 0;
 
 	int c;	
-	while ((c = getopt (argc, argv, "hvodpilmbds:")) != -1)
+	while ((c = getopt (argc, argv, "hvodpilmbrds:")) != -1)
 	{
 		switch (c)
 		{
@@ -183,7 +183,7 @@ std::string getVal(std::string xml, std::string key)
 	{
 		TiXmlNode* child = NULL;
 		
-		while(child = root->IterateChildren(child))
+		while (child = root->IterateChildren(child))
 		{
 			TiXmlNode* val = child->FirstChild(key.c_str());
 			if (val)
