@@ -46,7 +46,7 @@ bool showHelp()
 	printf("-d  Display direct link to image (default)\n");
 	printf("-p  Display link to image page\n");
 	printf("-i  Display HTML image\n");
-	printf("-l  Display HTMl link\n");
+	printf("-l  Display HTML link\n");
 	printf("-m  Display message board image code\n");
 	printf("-b  Display message board link code\n");
 	printf("-r  Display delete link\n");
