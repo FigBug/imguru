@@ -9,7 +9,6 @@ Uploads one of more images to imgur.com. Supports all image formats supported by
 -l  Display HTML link
 -m  Display message board image code
 -b  Display message board link code
--r  Display delete link
 -o  Open uploaded images in browser
 -s  Resize image to have maximum dimension of max_dimension
 -h  Display help

@@ -47,7 +47,7 @@
 		78A7122A109F9E9B00158DC0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		78A71324109FA3F000158DC0 /* NSImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSImageAdditions.h; sourceTree = "<group>"; };
 		78A71325109FA3F000158DC0 /* NSImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSImageAdditions.m; sourceTree = "<group>"; };
-		8DD76F6C0486A84900D96B5E /* imgur */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = imgur; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DD76F6C0486A84900D96B5E /* imguru */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = imguru; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* imgur.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = imgur.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,7 +93,7 @@
 		1AB674ADFE9D54B511CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8DD76F6C0486A84900D96B5E /* imgur */,
+				8DD76F6C0486A84900D96B5E /* imguru */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,7 +137,7 @@
 			name = imguru;
 			productInstallPath = "$(HOME)/bin";
 			productName = imgur;
-			productReference = 8DD76F6C0486A84900D96B5E /* imgur */;
+			productReference = 8DD76F6C0486A84900D96B5E /* imguru */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -198,7 +198,7 @@
 					"_GLIBCXX_DEBUG_PEDANTIC=1",
 				);
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = imgur;
+				PRODUCT_NAME = imguru;
 			};
 			name = Debug;
 		};
