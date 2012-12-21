@@ -77,7 +77,7 @@ static size_t outputCallback(void *ptr, size_t size, size_t nmemb, void *data)
 	return sz;
 }
 
-std::string imageIdFromXml(std::string xml)
+std::string imageIdFromXml(std::string xml, std::string& err)
 {
 	TiXmlDocument doc;
 	doc.Parse(xml.c_str());
@@ -88,6 +88,10 @@ std::string imageIdFromXml(std::string xml)
 		TiXmlElement* id = root->FirstChildElement("id");
         if (id)
             return id->GetText();
+        
+        TiXmlElement* error = root->FirstChildElement("error");
+        if (error)
+            return error->GetText();
 	}
 	
 	return "";
@@ -114,7 +118,7 @@ std::string getImageInfo(std::string id)
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, outputCallback);
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&output);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)&output);
 		curl_easy_setopt(curl, CURLOPT_USERAGENT, "penis-browser/1.1");
 		
 		res = curl_easy_perform(curl);
@@ -125,7 +129,7 @@ std::string getImageInfo(std::string id)
 	return output;
 }
 
-std::string uploadImage(std::string filename)
+std::string uploadImage(std::string filename, std::string& err)
 {
 	CURL *curl;
 	CURLcode res;
@@ -163,7 +167,7 @@ std::string uploadImage(std::string filename)
 		curl_formfree(formpost);
 	}
 
-	return imageIdFromXml(output);
+	return imageIdFromXml(output, err);
 }
 
 int parseCmdLine(int argc, char* const argv[])
@@ -252,7 +256,10 @@ bool userOutput(std::string id)
 	if (optMessageBoardLink)
 		printf("[URL=%s][IMG]%s[/IMG][/URL]\n", getVal(xml, "link").c_str(), getVal(xml, "link").c_str());
 	if (optOpenBrowser)
-		browseTo("http://imgur.com/" + id);
+    {
+        std::string url = "http://imgur.com/" + id;
+		browseTo(url);
+    }
 	
 	return true;
 }
@@ -281,9 +288,10 @@ int main (int argc, char* const argv[])
 		if (processed != optFiles[i])
 			tempFiles.push_back(processed);
 		
-		std::string output = uploadImage(processed.c_str());
-		if (!userOutput(output))
-			fprintf(stderr, "Upload failed for %s.\n", optFiles[i].c_str());
+        std::string err;
+		std::string output = uploadImage(processed.c_str(), err);
+		if (!userOutput(output) || err.length() > 0)
+			fprintf(stderr, "Upload failed for %s.\n%s\n", optFiles[i].c_str(), err.c_str());
 	}
 	
 	for (int i = 0; i < tempFiles.size(); i++)
