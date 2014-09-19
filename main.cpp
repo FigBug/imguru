@@ -22,19 +22,23 @@ bool optMessageBoardLink = false;
 bool optOpenBrowser      = false;
 bool optShowHelp         = false;
 bool optShowVersion      = false;
+bool optCopyClipboard    = false;
 
 int  optImageSize = 0;
 
 std::vector<std::string> optFiles;
 std::vector<std::string> tempFiles;
+
+std::string clipBuffer;
 //=========================================================================================================================
 std::string processImage(std::string inputFile, int optImageSize);
 void browseTo(std::string url);
 void init();
+void copyToClipboard(std::string text);
 
 bool usage()
 {
-	printf("usage: imguru [-odpilmbdhv] [-s max_dimension] source_file ...\n");
+	printf("usage: imguru [-odpilmbdhvc] [-s max_dimension] source_file ...\n");
 	return true;
 }
 
@@ -46,6 +50,7 @@ bool showHelp()
 	printf("-p  Display link to image page\n");
 	printf("-i  Display HTML image\n");
 	printf("-l  Display HTML link\n");
+    printf("-c  Also copy link to clipboard\n");
 	printf("-m  Display message board image code\n");
 	printf("-b  Display message board link code\n");
 	printf("-o  Open uploaded images in browser\n");
@@ -57,7 +62,7 @@ bool showHelp()
 
 bool showVersion()
 {
-	printf("imguru v1.0.4 by Roland Rabien (figbug@gmail.com) %s.\n", __DATE__);
+	printf("imguru v1.0.5 by Roland Rabien (figbug@gmail.com) %s.\n", __DATE__);
 	
 	return true;
 }
@@ -176,7 +181,7 @@ int parseCmdLine(int argc, char* const argv[])
 	opterr = 0;
 
 	int c;	
-	while ((c = getopt (argc, argv, "hvodpilmbds:")) != -1)
+	while ((c = getopt (argc, argv, "hvodpilmbcds:")) != -1)
 	{
 		switch (c)
 		{
@@ -189,6 +194,7 @@ int parseCmdLine(int argc, char* const argv[])
 			case 'o': optOpenBrowser      = true; break;
 			case 'h': optShowHelp         = true; break;
 			case 'v': optShowVersion      = true; break;
+            case 'c': optCopyClipboard    = true; break;
 			case 's': optImageSize = atoi(optarg); break;
 			case '?':
 				if (optopt == 'c')
@@ -237,31 +243,52 @@ std::string getVal(std::string xml, std::string key)
 	return "";	
 }
 
+void spf(std::string &s, const std::string fmt, ...)
+{
+    int n, size=100;
+    bool b=false;
+    va_list marker;
+    
+    while (!b)
+    {
+        s.resize(size);
+        va_start(marker, fmt);
+        n = vsnprintf((char*)s.c_str(), size, fmt.c_str(), marker);
+        va_end(marker);
+        if ((n>0) && ((b=(n<size))==true)) s.resize(n); else size*=2;
+    }
+}
+
 bool userOutput(std::string id)
 {
     if (id.length() == 0)
         return false;
     
     std::string xml = getImageInfo(id);
+    std::string output;
     
 	if (optDirect)
-		printf("%s\n", getVal(xml, "link").c_str());
+		spf(output, "%s\n", getVal(xml, "link").c_str());
 	if (optImagePage)
-		printf("http://imgur.com/%s\n", id.c_str());
+		spf(output, "http://imgur.com/%s\n", id.c_str());
 	if (optHtmlImage)
-		printf("<img src=\"%s\" alt=\"Hosted by imgur.com\" />\n", getVal(xml, "link").c_str());
+		spf(output, "<img src=\"%s\" alt=\"Hosted by imgur.com\" />\n", getVal(xml, "link").c_str());
 	if (optHtmlLink)
-		printf("<a href=\"%s\" title=\"Hosted by imgur.com\">%s</a>\n", getVal(xml, "link").c_str(), getVal(xml, "link").c_str());
+		spf(output, "<a href=\"%s\" title=\"Hosted by imgur.com\">%s</a>\n", getVal(xml, "link").c_str(), getVal(xml, "link").c_str());
 	if (optMessageBoard)
-		printf("[IMG]%s[/IMG]\n", getVal(xml, "link").c_str());
+		spf(output, "[IMG]%s[/IMG]\n", getVal(xml, "link").c_str());
 	if (optMessageBoardLink)
-		printf("[URL=%s][IMG]%s[/IMG][/URL]\n", getVal(xml, "link").c_str(), getVal(xml, "link").c_str());
+		spf(output, "[URL=%s][IMG]%s[/IMG][/URL]\n", getVal(xml, "link").c_str(), getVal(xml, "link").c_str());
 	if (optOpenBrowser)
     {
         std::string url = "http://imgur.com/" + id;
 		browseTo(url);
     }
-	
+    if (output.length() > 0)
+        puts(output.c_str());
+    if (optCopyClipboard && output.length() > 0)
+        clipBuffer += output;
+    
 	return true;
 }
 
@@ -294,6 +321,9 @@ int main (int argc, char* const argv[])
 		if (!userOutput(output) || err.length() > 0)
 			fprintf(stderr, "Upload failed for %s.\n%s\n", optFiles[i].c_str(), err.c_str());
 	}
+    
+    if (clipBuffer.length() > 0)
+        copyToClipboard(clipBuffer);
 	
 	for (int i = 0; i < tempFiles.size(); i++)
 		remove(tempFiles[i].c_str());

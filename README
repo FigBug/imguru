@@ -7,6 +7,7 @@ Uploads one of more images to imgur.com. Supports all image formats supported by
 -p  Display link to image page
 -i  Display HTML image
 -l  Display HTML link
+-c  Also copy link to clipboard
 -m  Display message board image code
 -b  Display message board link code
 -o  Open uploaded images in browser

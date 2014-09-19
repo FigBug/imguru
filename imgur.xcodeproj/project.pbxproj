@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7817C3B1109F271400B7DFFB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7817C3B0109F271400B7DFFB /* libcurl.dylib */; };
+		7846F46C19CCE0B00006A30D /* osutil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7846F46B19CCE0B00006A30D /* osutil.mm */; };
 		78A71146109F5FE600158DC0 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71140109F5FE600158DC0 /* tinystr.cpp */; };
 		78A71147109F5FE600158DC0 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71142109F5FE600158DC0 /* tinyxml.cpp */; };
 		78A71148109F5FE600158DC0 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71144109F5FE600158DC0 /* tinyxmlerror.cpp */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		08FB7796FE84155DC02AAC07 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7817C3B0109F271400B7DFFB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
+		7846F46B19CCE0B00006A30D /* osutil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = osutil.mm; sourceTree = "<group>"; };
 		78A71140109F5FE600158DC0 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = tinyxml/tinystr.cpp; sourceTree = "<group>"; };
 		78A71141109F5FE600158DC0 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = tinyxml/tinystr.h; sourceTree = "<group>"; };
 		78A71142109F5FE600158DC0 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml.cpp; path = tinyxml/tinyxml.cpp; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				78A71196109F9CDE00158DC0 /* ImgProc.mm */,
 				78A71324109FA3F000158DC0 /* NSImageAdditions.h */,
 				78A71325109FA3F000158DC0 /* NSImageAdditions.m */,
+				7846F46B19CCE0B00006A30D /* osutil.mm */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -146,7 +149,7 @@
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0600;
 			};
 			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "imgur" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -175,6 +178,7 @@
 				8DD76F650486A84900D96B5E /* main.cpp in Sources */,
 				78A71146109F5FE600158DC0 /* tinystr.cpp in Sources */,
 				78A71147109F5FE600158DC0 /* tinyxml.cpp in Sources */,
+				7846F46C19CCE0B00006A30D /* osutil.mm in Sources */,
 				78A71148109F5FE600158DC0 /* tinyxmlerror.cpp in Sources */,
 				78A71149109F5FE600158DC0 /* tinyxmlparser.cpp in Sources */,
 				78A71197109F9CDE00158DC0 /* ImgProc.mm in Sources */,
@@ -216,7 +220,6 @@
 		1DEB923608733DC60010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -230,7 +233,6 @@
 		1DEB923708733DC60010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
