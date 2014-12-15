@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7817C3B1109F271400B7DFFB /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7817C3B0109F271400B7DFFB /* libcurl.dylib */; };
+		7820A0371A3F28F1004DABA3 /* osutil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7820A0361A3F28F1004DABA3 /* osutil.mm */; };
 		78A71146109F5FE600158DC0 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71140109F5FE600158DC0 /* tinystr.cpp */; };
 		78A71147109F5FE600158DC0 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71142109F5FE600158DC0 /* tinyxml.cpp */; };
 		78A71148109F5FE600158DC0 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78A71144109F5FE600158DC0 /* tinyxmlerror.cpp */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		08FB7796FE84155DC02AAC07 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7817C3B0109F271400B7DFFB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
+		7820A0361A3F28F1004DABA3 /* osutil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = osutil.mm; sourceTree = "<group>"; };
 		78A71140109F5FE600158DC0 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinystr.cpp; path = tinyxml/tinystr.cpp; sourceTree = "<group>"; };
 		78A71141109F5FE600158DC0 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tinystr.h; path = tinyxml/tinystr.h; sourceTree = "<group>"; };
 		78A71142109F5FE600158DC0 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxml.cpp; path = tinyxml/tinyxml.cpp; sourceTree = "<group>"; };
@@ -81,11 +83,12 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				78A7113F109F5FCF00158DC0 /* TinyXml */,
-				08FB7796FE84155DC02AAC07 /* main.cpp */,
 				78A71196109F9CDE00158DC0 /* ImgProc.mm */,
+				08FB7796FE84155DC02AAC07 /* main.cpp */,
 				78A71324109FA3F000158DC0 /* NSImageAdditions.h */,
 				78A71325109FA3F000158DC0 /* NSImageAdditions.m */,
+				7820A0361A3F28F1004DABA3 /* osutil.mm */,
+				78A7113F109F5FCF00158DC0 /* TinyXml */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DD76F650486A84900D96B5E /* main.cpp in Sources */,
+				7820A0371A3F28F1004DABA3 /* osutil.mm in Sources */,
 				78A71146109F5FE600158DC0 /* tinystr.cpp in Sources */,
 				78A71147109F5FE600158DC0 /* tinyxml.cpp in Sources */,
 				78A71148109F5FE600158DC0 /* tinyxmlerror.cpp in Sources */,
