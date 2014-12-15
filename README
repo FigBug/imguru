@@ -1,4 +1,4 @@
-imguru v1.0.4 by Roland Rabien (figbug@gmail.com) Dec 21 2012.
+imguru v1.0.5 by Roland Rabien (figbug@gmail.com) Sept 19 2014.
 
 usage: imguru [-odpilmbdhv] [-s max_dimension] source_file ...
 Uploads one of more images to imgur.com. Supports all image formats supported by Mac OS X and will resize and convert to JPEG before uploading.
@@ -7,6 +7,7 @@ Uploads one of more images to imgur.com. Supports all image formats supported by
 -p  Display link to image page
 -i  Display HTML image
 -l  Display HTML link
+-c  Also copy link to clipboard
 -m  Display message board image code
 -b  Display message board link code
 -o  Open uploaded images in browser
