@@ -148,7 +148,7 @@
     // Calculate compositing rectangles
     NSRect sourceRect;
     if (cropping) {
-        float destX, destY;
+        float destX = 0, destY = 0;
         if (resizeMethod == MGImageResizeCrop) {
             // Crop center
             destX = round((scaledWidth - targetWidth) / 2.0);
@@ -219,7 +219,7 @@
 	
 	for (NSImageRep* rep in [self representations])
 	{
-		int a = [rep pixelsWide] * [rep pixelsHigh];
+		int a = (int) ([rep pixelsWide] * [rep pixelsHigh]);
 		if (a > area)
 		{
 			area = a;

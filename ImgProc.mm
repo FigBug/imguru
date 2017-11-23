@@ -64,7 +64,7 @@ std::string processImage(std::string inputFile, int optImageSize)
 			newType = NSPNGFileType;
 		
 		NSBitmapImageRep* bits = [NSBitmapImageRep imageRepWithData: [img TIFFRepresentation]];			
-		NSData* data = [bits representationUsingType: NSPNGFileType properties: nil];
+		NSData* data = [bits representationUsingType: NSPNGFileType properties: [NSDictionary dictionary]];
 		
 		NSString* tempTemplate = [NSString stringWithFormat: @"%@XXXXXXXX", NSTemporaryDirectory()];
 		

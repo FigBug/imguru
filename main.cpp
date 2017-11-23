@@ -69,7 +69,7 @@ bool showVersion()
 
 static size_t outputCallback(void *ptr, size_t size, size_t nmemb, void *data)
 {
-	int sz = size * nmemb;
+	int sz = int (size * nmemb);
 	
 	std::string* output = (std::string*)data;
 	
