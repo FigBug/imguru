@@ -1,0 +1,24 @@
+name: Build macOS
+on: [push]
+
+jobs:
+  build:
+    name: Build macOS
+    timeout-minutes: 60
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Run script"
+        run: ./ci/mac/build
+        shell: bash
+        env:
+          APPLICATION: ${{ secrets.APPLICATION }}
+          INSTALLER: ${{ secrets.INSTALLER }}
+          APPLE_PASS: ${{ secrets.APPLE_PASS }}
+          APPLE_USER: ${{ secrets.APPLE_USER }}
+          APIKEY: ${{ secrets.APIKEY }}
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Mac
+          path: ci/mac/bin
+

@@ -10,3 +10,6 @@
 *.plist
 
 *.xcbkptlist
+
+ci/mac/bin
+build
