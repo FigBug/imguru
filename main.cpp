@@ -62,7 +62,7 @@ bool showHelp()
 
 bool showVersion()
 {
-	printf("imguru v1.0.5 by Roland Rabien (figbug@gmail.com) %s.\n", __DATE__);
+	printf("imguru v1.0.6 by Roland Rabien (figbug@gmail.com) %s.\n", __DATE__);
 	
 	return true;
 }

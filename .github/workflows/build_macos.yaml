@@ -1,9 +1,9 @@
-name: Build macOS
+name: imguru
 on: [push]
 
 jobs:
   build:
-    name: Build macOS
+    name: imguru
     timeout-minutes: 60
     runs-on: macos-latest
     steps:
@@ -18,6 +18,6 @@ jobs:
           APPLE_USER: ${{ secrets.APPLE_USER }}
       - uses: actions/upload-artifact@v1
         with:
-          name: Mac
+          name: imguru
           path: ci/mac/bin
 
