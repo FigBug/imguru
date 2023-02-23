@@ -1,4 +1,4 @@
-imguru v1.0.5 by Roland Rabien (figbug@gmail.com) Sept 19 2014.
+imguru v1.0.6 by Roland Rabien (figbug@gmail.com) Feb 23 2023.
 
 usage: imguru [-odpilmbdhv] [-s max_dimension] source_file ...
 Uploads one of more images to imgur.com. Supports all image formats supported by Mac OS X and will resize and convert to JPEG before uploading.
@@ -22,4 +22,4 @@ curl
 NSImage+MGCropExtensions
 
 Download:
-http://downloads.rabien.com/imguru.tar.gz
+https://github.com/FigBug/imguru/releases/download/v1.0.6/imguru.zip
