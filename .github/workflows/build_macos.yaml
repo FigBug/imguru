@@ -20,4 +20,5 @@ jobs:
         with:
           name: imguru
           path: ci/mac/bin
+          retention-days: 3
 
