@@ -24,17 +24,41 @@ DEV_INST_ID="Developer ID Installer: Roland Rabien (3FS7DJDG38)"
 ROOT=$(cd "$(dirname "$0")/../.."; pwd)
 cd "$ROOT"
 
+# Bake in the client secret so released builds can sign in to imgur. It is
+# written to a gitignored header rather than passed as a build setting, which
+# xcodebuild would echo into the public build log. set +x for the same reason.
+if [[ -n "$IMGUR_SECRET" ]]; then
+  set +x
+  printf '#define IMGUR_CLIENT_SECRET "%s"\n' "$IMGUR_SECRET" > "$ROOT/Secret.h"
+  set -x
+  echo "Building with a client secret"
+else
+  echo "No IMGUR_SECRET set, this build will only upload anonymously"
+fi
+
 cd "$ROOT"
-xcodebuild -configuration Release || exit 1
+xcodebuild -configuration Release || { rm -f "$ROOT/Secret.h"; exit 1; }
+rm -f "$ROOT/Secret.h"
 
 rm -Rf "$ROOT/ci/mac/bin"
 mkdir -p "$ROOT/ci/mac/bin"
 cp -R "$ROOT/build/Release/imguru" "$ROOT/ci/mac/bin"
 
 cd "$ROOT/ci/mac/bin"
-codesign --force -s "$DEV_APP_ID" -v "imguru" --deep --strict --options=runtime
+
+# Signing and notarizing need the certificates and the Apple account, which a
+# fork or a pull request does not have. Still produce an artifact without them.
+if [[ -n "$APPLICATION" ]]; then
+  codesign --force -s "$DEV_APP_ID" -v "imguru" --deep --strict --options=runtime
+else
+  echo "No signing certificate, skipping codesign"
+fi
 
 zip -r imguru.zip imguru
 rm imguru
 
-xcrun notarytool submit --verbose --apple-id "$APPLE_USER" --password "$APPLE_PASS" --team-id 3FS7DJDG38 --wait --timeout 30m "./imguru.zip"
+if [[ -n "$APPLE_USER" && -n "$APPLE_PASS" ]]; then
+  xcrun notarytool submit --verbose --apple-id "$APPLE_USER" --password "$APPLE_PASS" --team-id 3FS7DJDG38 --wait --timeout 30m "./imguru.zip"
+else
+  echo "No Apple account, skipping notarization"
+fi
