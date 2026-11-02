@@ -13,3 +13,5 @@
 
 ci/mac/bin
 build
+
+.DS_Store

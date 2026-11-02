@@ -30,6 +30,8 @@ std::vector<std::string> optFiles;
 std::vector<std::string> tempFiles;
 
 std::string clipBuffer;
+
+int exitCode = 0;
 //=========================================================================================================================
 std::string processImage(std::string inputFile, int optImageSize);
 void browseTo(std::string url);
@@ -83,7 +85,7 @@ static size_t outputCallback(void *ptr, size_t size, size_t nmemb, void *data)
 	return sz;
 }
 
-std::string imageIdFromXml(std::string xml, std::string& err)
+std::string getVal(std::string xml, std::string key)
 {
 	TiXmlDocument doc;
 	doc.Parse(xml.c_str());
@@ -91,48 +93,38 @@ std::string imageIdFromXml(std::string xml, std::string& err)
 	TiXmlElement* root = doc.RootElement();
 	if (root)
 	{
-		TiXmlElement* id = root->FirstChildElement("id");
-        if (id)
-            return id->GetText();
-        
-        TiXmlElement* error = root->FirstChildElement("error");
-        if (error)
-            return error->GetText();
-	}
+		TiXmlElement* child = root->FirstChildElement(key.c_str());
+        if (child && child->GetText())
+            return child->GetText();
+    }
 	
-	return "";
-
+	return "";	
 }
 
-std::string getImageInfo(std::string id)
+// Returns the error message from an imgur api response, or "" if it succeeded.
+std::string errorFromXml(std::string xml)
 {
-	CURL *curl;
-	CURLcode res;
+	TiXmlDocument doc;
+	doc.Parse(xml.c_str());
 	
-    struct curl_slist *headers     = NULL;
-    
-	std::string output;
-    
-    curl = curl_easy_init();
-    
-    headers = curl_slist_append(headers, "Authorization: Client-ID 51f229880e3ea84");
-    
-	if (curl)
+	TiXmlElement* root = doc.RootElement();
+	if (root)
 	{
-        std::string url = std::string("https://api.imgur.com/3/image/") + id + "/.xml";
+		const char* success = root->Attribute("success");
+        if (success && std::string(success) == "1")
+            return "";
         
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, outputCallback);
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)&output);
-		curl_easy_setopt(curl, CURLOPT_USERAGENT, "penis-browser/1.1");
-		
-		res = curl_easy_perform(curl);
-		
-		curl_easy_cleanup(curl);		
+        // <error> holds <code>, <message>, <type> and <exception> children
+        TiXmlElement* error = root->FirstChildElement("error");
+        if (error)
+        {
+            TiXmlElement* message = error->FirstChildElement("message");
+            if (message && message->GetText())
+                return message->GetText();
+        }
 	}
-    
-	return output;
+	
+	return "Unexpected response from imgur.com";
 }
 
 std::string uploadImage(std::string filename, std::string& err)
@@ -147,6 +139,11 @@ std::string uploadImage(std::string filename, std::string& err)
 	std::string output;
 		
     curl = curl_easy_init();
+    if (!curl)
+    {
+        err = "Failed to initialise curl";
+        return "";
+    }
     
 	curl_formadd(&formpost,
 				 &lastptr,
@@ -167,13 +164,16 @@ std::string uploadImage(std::string filename, std::string& err)
 		curl_easy_setopt(curl, CURLOPT_USERAGENT, "penis-browser/1.1");
 		
 		res = curl_easy_perform(curl);
+		if (res != CURLE_OK)
+			err = curl_easy_strerror(res);
 		
 		curl_easy_cleanup(curl);
 		
 		curl_formfree(formpost);
+		curl_slist_free_all(headers);
 	}
 
-	return imageIdFromXml(output, err);
+	return output;
 }
 
 int parseCmdLine(int argc, char* const argv[])
@@ -214,71 +214,73 @@ int parseCmdLine(int argc, char* const argv[])
 	
 	for (int index = optind; index < argc; index++)
 	{
+		bool found = false;
 		char* path = realpath(argv[index], NULL);
         if (path)
         {
             struct stat buf;
             if (stat(path, &buf) == 0)
+            {
                 optFiles.push_back(std::string(path));
+                found = true;
+            }
             
             free(path);
+        }
+        
+        if (!found)
+        {
+            fprintf(stderr, "No such file: %s\n", argv[index]);
+            exitCode = 1;
         }
 	}
 	return 0;	
 }
 
-std::string getVal(std::string xml, std::string key)
-{
-	TiXmlDocument doc;
-	doc.Parse(xml.c_str());
-	
-	TiXmlElement* root = doc.RootElement();
-	if (root)
-	{
-		TiXmlElement* child = root->FirstChildElement(key.c_str());
-        if (child)
-            return child->GetText();
-    }
-	
-	return "";	
-}
-
+// Formats fmt and appends the result to s
 void spf(std::string &s, const std::string fmt, ...)
 {
-    int n, size=100;
-    bool b=false;
     va_list marker;
     
-    while (!b)
-    {
-        s.resize(size);
-        va_start(marker, fmt);
-        n = vsnprintf((char*)s.c_str(), size, fmt.c_str(), marker);
-        va_end(marker);
-        if ((n>0) && ((b=(n<size))==true)) s.resize(n); else size*=2;
-    }
+    va_start(marker, fmt);
+    int n = vsnprintf(NULL, 0, fmt.c_str(), marker);
+    va_end(marker);
+    
+    if (n <= 0)
+        return;
+    
+    std::vector<char> buf(n + 1);
+    
+    va_start(marker, fmt);
+    vsnprintf(&buf[0], buf.size(), fmt.c_str(), marker);
+    va_end(marker);
+    
+    s.append(&buf[0], n);
 }
 
-bool userOutput(std::string id)
+bool userOutput(std::string xml)
 {
-    if (id.length() == 0)
+    // The upload response already carries everything we need to display
+    std::string id   = getVal(xml, "id");
+    std::string link = getVal(xml, "link");
+    
+    if (id.length() == 0 || link.length() == 0)
         return false;
     
-    std::string xml = getImageInfo(id);
     std::string output;
     
 	if (optDirect)
-		spf(output, "%s\n", getVal(xml, "link").c_str());
+		spf(output, "%s\n", link.c_str());
 	if (optImagePage)
 		spf(output, "http://imgur.com/%s\n", id.c_str());
 	if (optHtmlImage)
-		spf(output, "<img src=\"%s\" alt=\"Hosted by imgur.com\" />\n", getVal(xml, "link").c_str());
+		spf(output, "<img src=\"%s\" alt=\"Hosted by imgur.com\" />\n", link.c_str());
 	if (optHtmlLink)
-		spf(output, "<a href=\"%s\" title=\"Hosted by imgur.com\">%s</a>\n", getVal(xml, "link").c_str(), getVal(xml, "link").c_str());
+		spf(output, "<a href=\"%s\" title=\"Hosted by imgur.com\">%s</a>\n", link.c_str(), link.c_str());
 	if (optMessageBoard)
-		spf(output, "[IMG]%s[/IMG]\n", getVal(xml, "link").c_str());
+		spf(output, "[IMG]%s[/IMG]\n", link.c_str());
 	if (optMessageBoardLink)
-		spf(output, "[URL=%s][IMG]%s[/IMG][/URL]\n", getVal(xml, "link").c_str(), getVal(xml, "link").c_str());
+		spf(output, "[URL=%s][IMG]%s[/IMG][/URL]\n", link.c_str(), link.c_str());
 	if (optOpenBrowser)
     {
         std::string url = "http://imgur.com/" + id;
@@ -299,7 +301,7 @@ int main (int argc, char* const argv[])
 	if (argc == 1 && usage())
 		return 0;
 	if (parseCmdLine(argc, argv) != 0)
-		return 0;
+		return 1;
 	if (optShowHelp && showHelp())
 		return 0;
 	if (optShowVersion && showVersion())
@@ -310,16 +312,27 @@ int main (int argc, char* const argv[])
 	for (int i = 0; i < optFiles.size(); i++)
 	{
 		std::string processed = processImage(optFiles[i], optImageSize);
-		if (processed == "") 
+		if (processed == "")
+		{
+			fprintf(stderr, "Could not read image %s.\n", optFiles[i].c_str());
+			exitCode = 1;
 			continue;
+		}
 		
 		if (processed != optFiles[i])
 			tempFiles.push_back(processed);
 		
         std::string err;
-		std::string output = uploadImage(processed.c_str(), err);
-		if (!userOutput(output) || err.length() > 0)
+		std::string xml = uploadImage(processed, err);
+		
+		if (err.length() == 0)
+			err = errorFromXml(xml);
+		
+		if (err.length() > 0 || !userOutput(xml))
+		{
 			fprintf(stderr, "Upload failed for %s.\n%s\n", optFiles[i].c_str(), err.c_str());
+			exitCode = 1;
+		}
 	}
     
     if (clipBuffer.length() > 0)
@@ -328,5 +341,5 @@ int main (int argc, char* const argv[])
 	for (int i = 0; i < tempFiles.size(); i++)
 		remove(tempFiles[i].c_str());
 	
-    return 0;
+    return exitCode;
 }
