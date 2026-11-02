@@ -1,6 +1,6 @@
-imguru v1.0.6 by Roland Rabien (figbug@gmail.com) Feb 23 2023.
+imguru v1.0.7 by Roland Rabien (figbug@gmail.com) Nov  2 2026.
 
-usage: imguru [-odpilmbdhv] [-s max_dimension] source_file ...
+usage: imguru [-odpilmbdhvcanwx] [-s max_dimension] source_file ...
 Uploads one of more images to imgur.com. Supports all image formats supported by Mac OS X and will resize and convert to JPEG before uploading.
 
 -d  Display direct link to image (default)
@@ -12,8 +12,34 @@ Uploads one of more images to imgur.com. Supports all image formats supported by
 -b  Display message board link code
 -o  Open uploaded images in browser
 -s  Resize image to have maximum dimension of max_dimension
+-a  Sign in to an imgur account, uploads then go to it
+-n  Upload anonymously even when signed in
+-w  Show which account imguru is signed in to
+-x  Sign out
 -h  Display help
 -v  Display version
+
+Accounts:
+By default uploads are anonymous, which means they are not tied to any account
+and cannot be deleted or listed afterwards.
+
+Run "imguru -a" to sign in. It opens imgur in your browser, you allow access,
+and imgur shows you a PIN to paste back into the terminal. After that every
+upload goes to your account until you run "imguru -x". Use "imguru -n" for a
+one off anonymous upload, and "imguru -w" to see who you are signed in as.
+
+Credentials are stored in ~/.imguru as key=value lines, readable only by you.
+The access token is refreshed automatically when it expires.
+
+Signing in needs the api client secret, which is not kept in this repository.
+Released builds have it compiled in. If you build from source and want to sign
+in, add a line to ~/.imguru:
+
+  client_secret=your_secret_here
+
+or set IMGUR_CLIENT_SECRET in the environment. Without it imguru still works,
+it just uploads anonymously. Note that imgur no longer registers new api
+clients, so every copy of imguru shares one client id and its rate limits.
 
 Depends on:
 imgur.com
@@ -22,4 +48,4 @@ curl
 NSImage+MGCropExtensions
 
 Download:
-https://github.com/FigBug/imguru/releases/download/v1.0.6/imguru.zip
+https://github.com/FigBug/imguru/releases/download/v1.0.7/imguru.zip
