@@ -1,79 +1,172 @@
-.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
-.\"See Also:
-.\"man mdoc.samples for a complete listing of options
-.\"man mdoc for the short list of editing options
-.\"/usr/share/misc/mdoc.template
-.Dd 09-11-02               \" DATE 
-.Dt imgur 1      \" Program name and manual section number 
-.Os Darwin
-.Sh NAME                 \" Section Header - required - don't modify 
-.Nm imgur,
-.\" The following lines are read in generating the apropos(man -k) database. Use only key
-.\" words here as the database is built based on the words here and in the .ND line. 
-.Nm Other_name_for_same_program(),
-.Nm Yet another name for the same program.
-.\" Use .Nm macro to designate other names for the documented program.
-.Nd This line parsed for whatis database.
-.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Dd November 2, 2026
+.Dt IMGURU 1
+.Os
+.Sh NAME
+.Nm imguru
+.Nd upload images to imgur.com
+.Sh SYNOPSIS
 .Nm
-.Op Fl abcd              \" [-abcd]
-.Op Fl a Ar path         \" [-a path] 
-.Op Ar file              \" [file]
-.Op Ar                   \" [file ...]
-.Ar arg0                 \" Underlined argument - use .Ar anywhere to underline
-arg2 ...                 \" Arguments
-.Sh DESCRIPTION          \" Section Header - required - don't modify
-Use the .Nm macro to refer to your program throughout the man page like such:
+.Op Fl dpilcmbo
+.Op Fl n
+.Op Fl s Ar max_dimension
+.Ar file ...
 .Nm
-Underlining is accomplished with the .Ar macro like this:
-.Ar underlined text .
-.Pp                      \" Inserts a space
-A list of items with descriptions:
-.Bl -tag -width -indent  \" Begins a tagged list 
-.It item a               \" Each item preceded by .It macro
-Description of item a
-.It item b
-Description of item b
-.El                      \" Ends the list
+.Fl a | w | x
+.Nm
+.Fl h | v
+.Sh DESCRIPTION
+.Nm
+uploads one or more images to imgur.com and prints a link to each one.
+Every image format that Mac OS X can read is accepted; images are converted
+to JPEG before uploading, and can be scaled down first with
+.Fl s .
 .Pp
-A list of flags and their descriptions:
-.Bl -tag -width -indent  \" Differs from above in tag removed 
-.It Fl a                 \"-a flag as a list item
-Description of -a flag
+Uploads are anonymous unless an account has been signed in to with
+.Fl a .
+An anonymous upload belongs to no account, so it cannot be listed or deleted
+afterwards.
+.Pp
+One line is printed per image for each output option given, in the order the
+options are listed below.
+If no output option is given,
+.Fl d
+is assumed.
+.Bl -tag -width "-s max_dimension"
+.It Fl d
+Display a direct link to the image.
+This is the default.
+.It Fl p
+Display a link to the image page.
+.It Fl i
+Display the image as an HTML
+.Dq img
+tag.
+.It Fl l
+Display the image as an HTML link.
+.It Fl m
+Display the image as message board
+.Dq IMG
+code.
 .It Fl b
-Description of -b flag
-.El                      \" Ends the list
+Display the image as message board
+.Dq URL
+code wrapping an
+.Dq IMG .
+.It Fl c
+Also copy everything printed to the clipboard.
+.It Fl o
+Open each uploaded image in the browser.
+.It Fl s Ar max_dimension
+Resize the image so that its largest dimension is
+.Ar max_dimension
+pixels before uploading.
+The aspect ratio is preserved and images smaller
+than this are left alone.
+.It Fl a
+Sign in to an imgur account.
+Subsequent uploads go to that account.
+.It Fl n
+Upload anonymously even when signed in.
+.It Fl w
+Show which account
+.Nm
+is signed in to, and when its access token expires.
+.It Fl x
+Sign out.
+Uploads become anonymous again.
+.It Fl h
+Display help.
+.It Fl v
+Display the version.
+.El
+.Sh AUTHENTICATION
+.Fl a
+opens imgur.com in the browser and asks for a PIN.
+Allow access on that page
+and imgur shows a PIN; paste it back into the terminal to finish signing in.
+The access token and refresh token are written to
+.Pa ~/.imguru ,
+and the access token is refreshed automatically once it expires.
 .Pp
-.\" .Sh ENVIRONMENT      \" May not be needed
-.\" .Bl -tag -width "ENV_VAR_1" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
-.\" .It Ev ENV_VAR_1
-.\" Description of ENV_VAR_1
-.\" .It Ev ENV_VAR_2
-.\" Description of ENV_VAR_2
-.\" .El                      
-.Sh FILES                \" File used or created by the topic of the man page
-.Bl -tag -width "/Users/joeuser/Library/really_long_file_name" -compact
-.It Pa /usr/share/file_name
-FILE_1 description
-.It Pa /Users/joeuser/Library/really_long_file_name
-FILE_2 description
-.El                      \" Ends the list
-.\" .Sh DIAGNOSTICS       \" May not be needed
-.\" .Bl -diag
-.\" .It Diagnostic Tag
-.\" Diagnostic informtion here.
-.\" .It Diagnostic Tag
-.\" Diagnostic informtion here.
-.\" .El
-.Sh SEE ALSO 
-.\" List links in ascending order by section, alphabetically within a section.
-.\" Please do not reference files that do not exist without filing a bug report
-.Xr a 1 , 
-.Xr b 1 ,
-.Xr c 1 ,
-.Xr a 2 ,
-.Xr b 2 ,
-.Xr a 3 ,
-.Xr b 3 
-.\" .Sh BUGS              \" Document known, unremedied bugs 
-.\" .Sh HISTORY           \" Document history if command behaves in a unique manner 
+Signing in needs the imgur api client secret, which is not distributed with
+the source.
+Released builds have it compiled in.
+To sign in from a build made
+from source, add a
+.Va client_secret
+line to
+.Pa ~/.imguru
+or set
+.Ev IMGUR_CLIENT_SECRET .
+Without the secret
+.Nm
+still uploads, just anonymously.
+.Pp
+imgur no longer registers new api clients, so every copy of
+.Nm
+shares a single client id and the rate limits that go with it.
+.Sh ENVIRONMENT
+.Bl -tag -width IMGUR_CLIENT_SECRET
+.It Ev IMGUR_CLIENT_SECRET
+The imgur api client secret, used by
+.Fl a
+and when refreshing an expired access token.
+Overridden by a
+.Va client_secret
+line in
+.Pa ~/.imguru .
+.It Ev HOME
+Determines where
+.Pa .imguru
+is read from and written to.
+.El
+.Sh FILES
+.Bl -tag -width "~/.imguru"
+.It Pa ~/.imguru
+Credentials and settings, as
+.Va key Ns = Ns Va value
+lines.
+Created readable only by its owner, because it holds an access token.
+Recognised keys are
+.Va access_token ,
+.Va refresh_token ,
+.Va expires_at ,
+.Va account_username
+and
+.Va client_secret .
+Lines beginning with
+.Dq #
+are ignored.
+.El
+.Sh EXIT STATUS
+.Nm
+exits 0 if every image was uploaded, and 1 if any upload failed, any file
+could not be read, or the options were invalid.
+.Sh EXAMPLES
+Upload an image and print a direct link:
+.Pp
+.Dl $ imguru screenshot.png
+.Pp
+Upload several images, scaled down, copying the links to the clipboard:
+.Pp
+.Dl $ imguru -c -s 1024 *.jpg
+.Pp
+Sign in, then upload to the account:
+.Pp
+.Dl $ imguru -a
+.Dl $ imguru holiday.jpg
+.Pp
+Upload one image anonymously while signed in:
+.Pp
+.Dl $ imguru -n private.png
+.Sh SEE ALSO
+.Xr curl 1 ,
+.Xr pbcopy 1
+.Sh AUTHORS
+.An Roland Rabien Aq Mt figbug@gmail.com
+.Sh BUGS
+imgur answers an invalid access token on the upload endpoint with
+.Dq Too Many Requests
+rather than an authentication error, so a failed upload while signed in may
+mean the token needs renewing with
+.Fl a .
